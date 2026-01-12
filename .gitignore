@@ -1,0 +1,48 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entorno virtual
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Variables de entorno
+.env.*
+*.env
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Archivos de configuración sensibles
+settings_local.py
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Tests / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node (si usas frontend)
+node_modules/
+
+# Build
+dist/
+build/
