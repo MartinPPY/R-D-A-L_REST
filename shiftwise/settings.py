@@ -27,9 +27,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'authentication',
-    'core',
     "drf_spectacular",
+    'authentication',
+    
 ]
 
 REST_FRAMEWORK = {

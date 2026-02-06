@@ -45,8 +45,7 @@ class LoginView(GenericAPIView):
 class RegisterView(GenericAPIView):
     
     permission_classes = [AllowAny] # Permitir acceso a esta funcion sin autenticación
-    authentication_classes = []  
-    
+    authentication_classes = []      
     serializer_class = RegisterSerializer
     
     def post(self,*args,**kwargs):
@@ -67,7 +66,7 @@ class RegisterView(GenericAPIView):
         return Response({"message":"Usuario creado correctamente!"},status=status.HTTP_201_CREATED)
 
 
-class LogoutView(GenericAPIView):
+class LogoutView(GenericAPIView):    
     
     def post(self,request):
         
@@ -78,7 +77,7 @@ class LogoutView(GenericAPIView):
         
         return response
 
-class ForgotPasswordView(APIView):
+class ForgotPasswordView(GenericAPIView):
     
     permission_classes = [AllowAny] # Permitir acceso a esta funcion sin autenticación
     authentication_classes = []
