@@ -60,3 +60,11 @@ def reset_password(email:str,password:str):
     except User.DoesNotExist:        
         raise AuthenticationFailed("No se encontró un usuario con ese correo electrónico")
     
+
+def get_groups_for_user(username:str):
+    try:
+        user = User.objects.get(username=username)
+        return user.groups.all()
+    except User.DoesNotExist:
+        raise AuthenticationFailed("No se encontró un usuario con ese nombre de usuario")
+    
