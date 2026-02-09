@@ -45,3 +45,6 @@ node_modules/
 # Build
 dist/
 build/
+
+#dbsqlite
+db.sqlite3

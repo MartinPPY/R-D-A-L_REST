@@ -1,7 +1,7 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny,IsAuthenticated
 from .serializers import *
 from .services import *
 
@@ -94,3 +94,17 @@ class ForgotPasswordView(GenericAPIView):
         )
         
         return Response({"message":"Password reset email sent!"},status=status.HTTP_200_OK)
+
+class GetPermissions(GenericAPIView):
+    
+    permision_classes = [IsAuthenticated]
+    
+    def get(self,request,*args,**kwargs):
+        
+        username = request.user
+        permisos  = get_groups_for_user(username)        
+        return Response(
+            {"permisos":permisos.values_list(flat=False)},status=status.HTTP_200_OK
+        )
+    
+    

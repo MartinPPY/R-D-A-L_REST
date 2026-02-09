@@ -61,8 +61,8 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8100",      # frontend dev
-    "http://127.0.0.1:8100",
+    "http://localhost:5173",      # frontend dev
+    "http://127.0.0.1:5173",
 ]
 
 ROOT_URLCONF = 'shiftwise.urls'
