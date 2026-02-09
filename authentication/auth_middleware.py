@@ -10,3 +10,8 @@ class CookieJWTAuthentication(JWTAuthentication):
             return None
         validated_token = self.get_validated_token(raw_token)
         return self.get_user(validated_token), validated_token
+    
+    
+    def authenticate_header(self, request):
+        # Evita que SimpleJWT intente usar AUTH_HEADER_TYPES[0]
+        return ""
