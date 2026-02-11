@@ -19,3 +19,6 @@ class ForgotPasswordSerializer(serializers.Serializer):
     
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+
+class EmptySerializer(serializers.Serializer):
+    pass

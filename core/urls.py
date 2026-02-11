@@ -1,9 +1,17 @@
-from django.urls import path
+from django.urls import path,include
+from rest_framework.routers import DefaultRouter
+
 from .views import *
 
+router = DefaultRouter()
 
-urlpatterns = [
-    
-    path("area",AreaView.as_view(),name="area")
-    
+router.register(r'actividad',ActivityViewSet,basename="actividad")
+
+
+
+
+urlpatterns = [    
+    path("area",AreaView.as_view(),name="area"),    
+    path("",include(router.urls)),
+    path("resumen",get_resumen_usuario,name="resumen")
 ]

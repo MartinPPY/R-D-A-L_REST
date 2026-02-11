@@ -65,7 +65,7 @@ class RegisterView(GenericAPIView):
         return Response({"message":"Usuario creado correctamente!"},status=status.HTTP_201_CREATED)
 
 
-class LogoutView(GenericAPIView):    
+class LogoutView(GenericAPIView):
     
     def post(self,request):
         
@@ -98,6 +98,7 @@ class ForgotPasswordView(GenericAPIView):
 class GetPermissions(GenericAPIView):
     
     permision_classes = [IsAuthenticated]
+    serializer_class = EmptySerializer
     
     def get(self,request,*args,**kwargs):
         
@@ -107,4 +108,32 @@ class GetPermissions(GenericAPIView):
             {"permisos":permisos.values_list(flat=False)},status=status.HTTP_200_OK
         )
     
+
+class RefreshTokenView(GenericAPIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get("refresh_token")
+
+        if not refresh_token:
+            raise AuthenticationFailed("Refresh token no encontrado")
+
+        try:
+            refresh = RefreshToken(refresh_token)
+            access_token = str(refresh.access_token)
+        except Exception:
+            raise AuthenticationFailed("Refresh token inválido o expirado")
+
+        response = Response({"message": "OK"}, status=status.HTTP_200_OK)
+
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            secure=True,
+            samesite="Lax",
+        )
+
+        return response  
     
