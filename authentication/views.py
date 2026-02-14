@@ -66,6 +66,8 @@ class RegisterView(GenericAPIView):
 
 
 class LogoutView(GenericAPIView):
+
+    serializer_class = EmptySerializer
     
     def post(self,request):
         
@@ -110,8 +112,10 @@ class GetPermissions(GenericAPIView):
     
 
 class RefreshTokenView(GenericAPIView):
+
     permission_classes = [AllowAny]
     authentication_classes = []
+    serializer_class = EmptySerializer
 
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get("refresh_token")
@@ -135,5 +139,19 @@ class RefreshTokenView(GenericAPIView):
             samesite="Lax",
         )
 
-        return response  
+        return response
+
+class CheckAuthView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = [EmptySerializer]
+
+    def get(self,request,*args,**kwargs):
+
+        username = request.user.username
+        response_body = {
+            "user":username
+        }
+        return Response(response_body,status=status.HTTP_200_OK)
+
     

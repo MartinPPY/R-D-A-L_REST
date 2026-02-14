@@ -6,6 +6,7 @@ from .views import *
 router = DefaultRouter()
 
 router.register(r'actividad',ActivityViewSet,basename="actividad")
+router.register(r'orden-compra',OrdenPagoViewSet,basename="orden-compra")
 
 
 
@@ -13,5 +14,7 @@ router.register(r'actividad',ActivityViewSet,basename="actividad")
 urlpatterns = [    
     path("area",AreaView.as_view(),name="area"),    
     path("",include(router.urls)),
-    path("resumen",get_resumen_usuario,name="resumen")
+    path("resumen",ResumenUsuarioView.as_view(),name="resumen"),
+    path("resumen-admin",ResumenMensualAdmin.as_view(),name="resumen-admin"),
+    path("resumen-pago",ResumenOrdenCompra.as_view(),name="resumen-pago"),
 ]

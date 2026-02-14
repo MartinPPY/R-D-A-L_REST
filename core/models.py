@@ -20,7 +20,7 @@ class Activity(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.fecha.strftime(format="dd-mm-yyyy") + " " + self.area.name
+        return self.user.username + " " + self.area.name 
     
     def diferencia_horas(self):
         inicio = datetime.combine(datetime.today(), self.hora_inicio)
@@ -33,6 +33,14 @@ class Activity(models.Model):
         horas = (fin - inicio).total_seconds() / 3600
         return round(horas)
 
+class OrdenCompra(models.Model):
+
+    fecha = models.DateField()
+    monto = models.IntegerField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.numero_compra + " " + self.user.username
 
 
 

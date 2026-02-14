@@ -7,5 +7,6 @@ urlpatterns = [
     path('register',RegisterView.as_view(),name="register"),
     path('forgot-password',ForgotPasswordView.as_view(),name="forgot-password"),
     path('permissions',GetPermissions.as_view(),name="permissions"),
-    path('refresh',RefreshTokenView.as_view(),name="refresh")
+    path('refresh',RefreshTokenView.as_view(),name="refresh"),
+    path('me',CheckAuthView.as_view(),name="me")
 ]
