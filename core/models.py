@@ -40,7 +40,7 @@ class OrdenCompra(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.numero_compra + " " + self.user.username
+        return str(self.monto) + " " + self.user.username
 
 
 

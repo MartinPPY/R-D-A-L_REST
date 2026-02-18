@@ -75,6 +75,8 @@ class LogoutView(GenericAPIView):
         
         response.delete_cookie("access_token")
         response.delete_cookie("refresh_token")
+        response.delete_cookie("csrftoken")
+        response.delete_cookie("sessionid")
         
         return response
 

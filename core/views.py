@@ -84,9 +84,11 @@ class ResumenOrdenCompra(GenericAPIView):
 
 
 class OrdenPagoViewSet(viewsets.ModelViewSet):
+
     permission_classes = [IsAuthenticated]
     serializer_class = OrdenPagoSerializer
     queryset = OrdenCompra.objects.all()
+    
 
 
 

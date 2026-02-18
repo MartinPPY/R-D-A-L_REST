@@ -1,9 +1,38 @@
 generar usuarios:
 
-alumno.rda
-Choco.123
+-   alumno.rda
+    Choco.123
 
-moderador.rda
-Choco.123
+-   alumno2.rda
+    Choco.123
+
+-   moderador.rda
+    Choco.123
+
+generar grupos de usuarios:
+
+-   usuario
+
+    -   ver areas
+    -   ver actividades
+    -   crear actividades
+    -   ver orden de pago
+
+-   moderador
+
+    -   ver areas
+    -   crud de actividades
+    -   crud de ordenes de pago
+
+generar areas de trabajo:
+
+-   Difusion
+-   Extension
+-   Comunicacion
+-   Financiamiento
+-   Biblioteca
+-   Citt
+-   Desarrollo Laboral
+
 
 

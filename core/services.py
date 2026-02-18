@@ -85,14 +85,19 @@ def get_orden_compra():
     )
 
     for usuario in usuarios:
+
+        if OrdenCompra.objects.filter(user=usuario, fecha__month=hoy.month,fecha__year=hoy.year  ).exists():
+            continue
         
         total = sum(
             act.diferencia_horas() * TARIFA
-            for act in usuario.activity_set.all()
+            for act in usuario.activity_set.filter(
+                aprobado=True
+            )
         )
 
         if total == 0:
-            continue
+            continue        
 
         resumen_usuario = {
             "user_id":usuario.pk,
