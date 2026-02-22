@@ -9,17 +9,14 @@ from .serializers import *
 from .services import *
 from .models import *
 
-class AreaView(GenericAPIView):
+class AreaViewSet(viewsets.ModelViewSet):
     
     permission_classes = [IsAuthenticated]
-    serializer_class = EmptySerializer
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
     
-    def get(self,request,*args,**kwargs):
-        areas = get_areas()
-        return Response(
-            {"areas":list(areas.values())},
-            status=status.HTTP_200_OK
-        )
+    
+    
 
 class ActivityViewSet(viewsets.ModelViewSet):
 

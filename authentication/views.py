@@ -146,7 +146,7 @@ class RefreshTokenView(GenericAPIView):
 class CheckAuthView(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
-    serializer_class = [EmptySerializer]
+    serializer_class = EmptySerializer
 
     def get(self,request,*args,**kwargs):
 

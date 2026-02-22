@@ -7,12 +7,12 @@ router = DefaultRouter()
 
 router.register(r'actividad',ActivityViewSet,basename="actividad")
 router.register(r'orden-compra',OrdenPagoViewSet,basename="orden-compra")
+router.register(r'area',AreaViewSet,basename="area")
 
 
 
 
 urlpatterns = [    
-    path("area",AreaView.as_view(),name="area"),    
     path("",include(router.urls)),
     path("resumen",ResumenUsuarioView.as_view(),name="resumen"),
     path("resumen-admin",ResumenMensualAdmin.as_view(),name="resumen-admin"),

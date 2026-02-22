@@ -1,0 +1,12 @@
+## Instalación del entorno de desarrollo
+
+### Requisitos:
+
+- Tener python instalado ( Python 3.13.11 )
+
+1. Primero ejecutar el comando  ` python -m venv venv ` para crear el entorno virtual
+2. Activar el venv con  ` venv/Scripts/activate  `
+3. Ejecutar ` pip install -r requirements.txt ` para instalar las dependencias.
+4. Crear una base de datos sqlite llamada ` db.sqlite3 ` para la base de datos de desarrollo
+5. Ejecutar el comando ` python manage.py migrate ` para crear las tablas en la base de datos creada.
+6. Crear un superusuario para el desarrollo con ` python manage.py createsuperuser ` y colocar las credenciales que sean
