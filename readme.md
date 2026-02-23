@@ -10,3 +10,11 @@
 4. Crear una base de datos sqlite llamada ` db.sqlite3 ` para la base de datos de desarrollo
 5. Ejecutar el comando ` python manage.py migrate ` para crear las tablas en la base de datos creada.
 6. Crear un superusuario para el desarrollo con ` python manage.py createsuperuser ` y colocar las credenciales que sean
+
+## Migrar base de datos a PostgreSQL
+
+### Requisitos:
+
+- Tener Docker instalado en tu maquina.
+
+1. ejecutar en la terminal ` docker-compose up -d `. Esto levantara una base de datos PostgreSQL y repetir los mismos pasos para migrar

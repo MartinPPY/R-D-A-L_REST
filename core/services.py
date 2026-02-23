@@ -26,12 +26,15 @@ def get_resumen(username):
             total_horas_aprobadas +=1            
             total_dinero_acumulado += actividad.diferencia_horas() * TARIFA
     
+    
+    orden_compra = OrdenCompra.objects.filter(user=user, fecha__month=date.today().month, fecha__year=date.today().year).first()
 
 
     resumen_mensual = {
         "horas_acumuladas":total_cantidad_horas,
         "total_acumulado":total_dinero_acumulado,
-        "horas_aprobadas":total_horas_aprobadas
+        "horas_aprobadas":total_horas_aprobadas,
+        "orden_compra":orden_compra.pk if orden_compra else None
     }
 
     return resumen_mensual
