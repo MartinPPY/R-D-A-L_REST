@@ -1,3 +1,7 @@
+# R-D-A-L REST
+
+Backend hecho en django con la finalidad de manejar la logica del servidor del proyecto r-d-a-l.
+
 ## Instalación del entorno de desarrollo
 
 ### Requisitos:
@@ -18,3 +22,17 @@
 - Tener Docker instalado en tu maquina.
 
 1. ejecutar en la terminal ` docker-compose up -d `. Esto levantara una base de datos PostgreSQL y repetir los mismos pasos para migrar
+
+### Creacion de variables de entorno
+
+es importante crear un archivo llamado .env el cual contenga los siguientes valores:
+- DB_USER
+- DB_PASSWORD
+- DB_NAME
+- SECRET_KEY
+- DEBUG
+- DB_HOST
+- DB_PORT
+
+Ademas antes de utilizar el frontend leer ` notes.txt `
+
