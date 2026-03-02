@@ -36,3 +36,4 @@ es importante crear un archivo llamado .env el cual contenga los siguientes valo
 
 Ademas antes de utilizar el frontend leer ` notes.txt `
 
+Ademas puedes ver la documentación de la api a traves de /docs/swager

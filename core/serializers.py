@@ -44,7 +44,7 @@ class ActivitySerializer(serializers.ModelSerializer):
         actividades_mes = Activity.objects.filter(user=user,fecha__year=hoy.year,fecha__month=hoy.month)
         
         for actividad in actividades_mes:
-            if data["hora_inicio"] < actividad.hora_fin and data["hora_fin"] > actividad.hora_inicio :
+            if data["hora_inicio"] < actividad.hora_fin and data["hora_fin"] > actividad.hora_inicio and data["fecha"] == actividad.fecha:
                 raise serializers.ValidationError("La actividad se superpone con otra actividad del mismo mes.")
         
         return data
