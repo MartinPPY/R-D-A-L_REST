@@ -29,7 +29,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
         hoy = date.today()
 
         if user.groups.filter(name="usuario").exists():
-            return Activity.objects.filter(user=user)
+            return Activity.objects.filter(user=user,fecha__month=hoy.month,fecha__year=hoy.year)
         
         
         

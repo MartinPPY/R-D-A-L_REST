@@ -11,13 +11,15 @@ def get_areas():
 
 #Resumen del mes por alumno
 def get_resumen(username):
+    hoy = date.today()
     total_cantidad_horas = 0
     total_dinero_acumulado = 0
     total_horas_aprobadas = 0
     
     #obtener el total de horas por mes
     user = User.objects.get(username=username)
-    actividades_resumen = Activity.objects.filter(user=user)
+    actividades_resumen = Activity.objects.filter(user=user,fecha__month=hoy.month,fecha__year=hoy.year)
+
     for actividad in actividades_resumen:        
         
         total_cantidad_horas += actividad.diferencia_horas()
