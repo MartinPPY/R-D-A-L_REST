@@ -1,7 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime,timedelta
+from datetime import date, datetime, timedelta
 # Create your models here.
+
+class ActivityQuerySet(models.QuerySet):
+    def for_user(self, user):
+        """Filtra actividades según el rol del usuario."""
+        if user.groups.filter(name="usuario").exists():
+            return self.filter(user=user)
+        return self.all()
+
+    def current_month(self):
+        """Filtra actividades del mes actual."""
+        hoy = date.today()
+        return self.filter(fecha__year=hoy.year, fecha__month=hoy.month)
+
+class ActivityManager(models.Manager):
+    def get_queryset(self):
+        return ActivityQuerySet(self.model, using=self._db)
+
+    def for_user_request(self, user):
+        """Lógica de filtrado combinada para las vistas."""
+        qs = self.get_queryset().for_user(user)
+        # Si es admin (no es 'usuario'), aplicamos filtro de mes por defecto
+        if not user.groups.filter(name="usuario").exists():
+            return qs.current_month()
+        return qs
 
 class Area(models.Model):
     
@@ -19,6 +43,8 @@ class Activity(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     
+    objects = ActivityManager()
+
     def __str__(self):
         return self.user.username + " " + self.area.name 
     

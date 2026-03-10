@@ -27,7 +27,7 @@ def login_and_get_tokens(username:str,password:str):
         "access": str(access),
     }
    
-def register_user(username:str,name:str,lastname:str,email:str,password:str,is_admin:bool=False):
+def register_user(username:str,name:str,lastname:str,email:str,password:str):
     if User.objects.filter(username=username).exists():
         raise AuthenticationFailed("El nombre de usuario ya está en uso")
     
@@ -42,10 +42,6 @@ def register_user(username:str,name:str,lastname:str,email:str,password:str,is_a
         password=password,
     )
     
-    if is_admin == True:
-        company_owner_group = Group.objects.get(name="Company_owner")
-        user.groups.add(company_owner_group)
-        
     user.save()
     
     return user

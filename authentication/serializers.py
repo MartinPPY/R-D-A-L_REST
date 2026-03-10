@@ -13,7 +13,6 @@ class RegisterSerializer(serializers.Serializer):
     lastname = serializers.CharField()    
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
-    is_admin = serializers.BooleanField(default=False)
     
 class ForgotPasswordSerializer(serializers.Serializer):
     
@@ -22,3 +21,13 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
 class EmptySerializer(serializers.Serializer):
     pass
+
+# SERIALIZERS PARA DOCUMENTACIÓN SWAGGER
+class MessageResponseSerializer(serializers.Serializer):
+    message = serializers.CharField()
+
+class GetPermissionsResponseSerializer(serializers.Serializer):
+    permisos = serializers.ListField(child=serializers.ListField())
+
+class CheckAuthResponseSerializer(serializers.Serializer):
+    user = serializers.CharField()

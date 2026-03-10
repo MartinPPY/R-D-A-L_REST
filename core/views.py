@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from drf_spectacular.utils import extend_schema
 from datetime import date
 
 from .serializers import *
@@ -25,28 +26,22 @@ class ActivityViewSet(viewsets.ModelViewSet):
     serializer_class = ActivitySerializer
 
     def get_queryset(self):
-        user = self.request.user
-        hoy = date.today()
-
-        if user.groups.filter(name="usuario").exists():
-            return Activity.objects.filter(user=user,fecha__month=hoy.month,fecha__year=hoy.year)
-        
-        
-        
-        return Activity.objects.filter(
-            fecha__year=hoy.year,
-            fecha__month=hoy.month
-        )
+        # MEJORA: La lógica de filtrado ahora vive en el Manager del Modelo
+        return Activity.objects.for_user_request(self.request.user)
 
     def perform_create(self, serializer):
-        
+        # Simplificado: El user ya se pasa en el serializer.save si es necesario o aquí
         serializer.save(user=self.request.user)
 
 
 class ResumenUsuarioView(GenericAPIView):
-
+    permission_classes = [IsAuthenticated]
     serializer_class = EmptySerializer
 
+    @extend_schema(
+        responses={200: ResumenUsuarioResponseSerializer},
+        description="Obtiene un resumen de horas y montos acumulados del usuario autenticado."
+    )
     def get(self,request,*args,**kwargs):
 
         username = request.user.username
@@ -57,9 +52,13 @@ class ResumenUsuarioView(GenericAPIView):
         )
 
 class ResumenMensualAdmin(GenericAPIView):
-
+    permission_classes = [IsAuthenticated]
     serializer_class = EmptySerializer
 
+    @extend_schema(
+        responses={200: ResumenMensualAdminResponseSerializer},
+        description="Resumen mensual general para administradores (usuarios, horas, órdenes)."
+    )
     def get(self,request,*args,**kwargs):
 
         resumen = get_resumen_admin()
@@ -74,6 +73,10 @@ class ResumenOrdenCompra(GenericAPIView):
     serializer_class = EmptySerializer
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        responses={200: ResumenOrdenCompraItemSerializer(many=True)},
+        description="Obtiene la lista de pagos pendientes (usuarios sin orden de compra este mes)."
+    )
     def get(self,request,*args,**kwargs):
 
         resumen = get_orden_compra()

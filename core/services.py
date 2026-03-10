@@ -1,7 +1,7 @@
 from .models import *
 from django.contrib.auth.models import User 
 from datetime import date
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Exists, OuterRef
 
 TARIFA = 2500
 
@@ -79,26 +79,33 @@ def get_orden_compra():
 
     usuarios = User.objects.filter(
         groups__name="usuario"
+    ).annotate(
+        tiene_orden_compra=Exists(
+            OrdenCompra.objects.filter(
+                user=OuterRef('pk'),
+                fecha__month=hoy.month,
+                fecha__year=hoy.year
+            )
+        )
     ).prefetch_related(
         Prefetch(
             'activity_set',
             queryset=Activity.objects.filter(
                 fecha__year=hoy.year,
-                fecha__month=hoy.month
+                fecha__month=hoy.month,
+                aprobado=True
             )
         )
     )
 
     for usuario in usuarios:
 
-        if OrdenCompra.objects.filter(user=usuario, fecha__month=hoy.month,fecha__year=hoy.year  ).exists():
+        if usuario.tiene_orden_compra:
             continue
         
         total = sum(
             act.diferencia_horas() * TARIFA
-            for act in usuario.activity_set.filter(
-                aprobado=True
-            )
+            for act in usuario.activity_set.all()
         )
 
         if total == 0:
@@ -114,6 +121,32 @@ def get_orden_compra():
         lista_pagos.append(resumen_usuario)
     
     return lista_pagos
+
+# SERVICIOS DE VALIDACIÓN
+def check_activity_overlap(user, fecha, hora_inicio, hora_fin, exclude_id=None):
+    """
+    Verifica si una actividad se superpone con otras del mismo usuario en el mismo mes.
+    Retorna True si hay superposición, False en caso contrario.
+    """
+    from .models import Activity
+    
+    # Obtenemos las actividades del mes para ese usuario
+    qs = Activity.objects.filter(
+        user=user,
+        fecha__year=fecha.year,
+        fecha__month=fecha.month,
+        fecha=fecha
+    )
+    
+    if exclude_id:
+        qs = qs.exclude(id=exclude_id)
+
+    for actividad in qs:
+        # Lógica de superposición: (Inicio1 < Fin2) AND (Fin1 > Inicio2)
+        if hora_inicio < actividad.hora_fin and hora_fin > actividad.hora_inicio:
+            return True
+            
+    return False
         
 
 

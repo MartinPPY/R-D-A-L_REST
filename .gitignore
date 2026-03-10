@@ -48,3 +48,5 @@ build/
 
 #dbsqlite
 db.sqlite3
+
+.agents/
